@@ -1,0 +1,16 @@
+services:
+  bot:
+    build: .
+    command: sh -c "python -m alembic upgrade head && python scripts/run_bot.py"
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+
+  search:
+    build: .
+    command: sh -c "python -m alembic upgrade head && python scripts/run_search.py"
+    env_file: .env
+    profiles: ["manual"]
+    volumes:
+      - ./data:/app/data
